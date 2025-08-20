@@ -45,6 +45,17 @@ void ScoreManager::findParticipant(int id) const {
     }
 }
 
+void ScoreManager::findParticipantByName(const std::string& name) const{
+    auto it = std::find_if(participants.begin(), participants.end(), 
+                         [name](const Participant& p) { return p.name == name; });
+
+    if (it != participants.end()) {
+        std::cout << "Participant Found: ID: " << it->id << ", Name: " << it->name << ", Score: " << it->score << std::endl;
+    } else {
+        std::cout << "Participant with Name " << name << " not found." << std::endl;
+    }
+}
+
 void ScoreManager::listAllParticipants() const {
     if (participants.empty()) {
         std::cout << "No participants in the system." << std::endl;

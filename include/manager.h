@@ -10,7 +10,7 @@ public:
     void addParticipant(int id, const std::string& name, double score);
     bool deleteParticipant(int id);
     bool updateParticipant(int id, const std::string& newName, double newScore);
-    void findParticipant(int id) const;
+    void findParticipantById(int id) const;
     void findParticipantByName(const std::string& name) const;
     void listAllParticipants() const;
 

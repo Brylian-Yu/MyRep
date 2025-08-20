@@ -34,7 +34,7 @@ bool ScoreManager::updateParticipant(int id, const std::string& newName, double 
     return false;
 }
 
-void ScoreManager::findParticipant(int id) const {
+void ScoreManager::findParticipantById(int id) const {
     auto it = std::find_if(participants.begin(), participants.end(), 
                          [id](const Participant& p) { return p.id == id; });
 

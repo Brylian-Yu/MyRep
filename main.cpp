@@ -34,7 +34,7 @@ int main() {
 
         switch (choice) {
             case 1:
-                std::cout << "Enter ID, Name, Score: ";
+                std::cout << "Enter ID, Name (use_for_spaces), Score: ";
                 std::cin >> id >> name >> score;
                 manager.addParticipant(id, name, score);
                 break;
@@ -44,7 +44,7 @@ int main() {
                 manager.deleteParticipant(id);
                 break;
             case 3:
-                std::cout << "Enter ID to update, new Name, new Score: ";
+                std::cout << "Enter ID to update, new Name (use_for_spaces), new Score: ";
                 std::cin >> id >> name >> score;
                 manager.updateParticipant(id, name, score);
                 break;
@@ -57,7 +57,7 @@ int main() {
                     std::cin >> id;
                     manager.findParticipantById(id);
                 } else if (findChoice == 2) {
-                    std::cout << "Enter Name to find: ";
+                    std::cout << "Enter Name to find (use_for_spaces): ";
                     std::cin >> name;
                     manager.findParticipantByName(name);
                 } else {

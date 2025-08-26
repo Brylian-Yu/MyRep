@@ -7,6 +7,16 @@
 
 class ScoreManager {
 public:
+    // Constructor
+    ScoreManager() = default;
+    
+    // Destructor to clean up dynamically allocated memory
+    ~ScoreManager();
+    
+    // Delete copy constructor and assignment operator to prevent shallow copying
+    ScoreManager(const ScoreManager&) = delete;
+    ScoreManager& operator=(const ScoreManager&) = delete;
+    
     void addParticipant(int id, const std::string& name, double score);
     bool deleteParticipant(int id);
     bool updateParticipant(int id, const std::string& newName, double newScore);
@@ -15,8 +25,8 @@ public:
     void listAllParticipants() const;
 
 private:
-    std::vector<Participant> participants;
-    std::vector<Participant>::iterator findById(int id);
+    std::vector<Participant*> participants;
+    std::vector<Participant*>::iterator findById(int id);
 };
 
 #endif // MANAGER_H

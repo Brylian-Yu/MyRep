@@ -7,7 +7,7 @@ LIB_DIR := lib
 
 # Compiler and flags
 CXX := g++
-CXXFLAGS := -std=c++17 -I$(INCLUDE_DIR) -O2 -Wall -Wextra
+CXXFLAGS := -std=c++11 -I$(INCLUDE_DIR) -O2 -Wall -Wextra
 LDFLAGS :=
 LDLIBS :=
 

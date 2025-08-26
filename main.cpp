@@ -15,7 +15,13 @@ void printMenu() {
 }
 
 int main() {
-    ScoreManager manager;
+    ScoreManager* manager = new ScoreManager();
+
+    if(manager == nullptr) {
+        std::cout << "Memory allocation failed." << std::endl;
+        return 1;
+    }
+
     int choice;
 
     do {
@@ -37,17 +43,17 @@ int main() {
             case 1:
                 std::cout << "Enter ID, Name (use_for_spaces), Score: ";
                 std::cin >> id >> name >> score;
-                manager.addParticipant(id, name, score);
+                manager->addParticipant(id, name, score);
                 break;
             case 2:
                 std::cout << "Enter ID to delete: ";
                 std::cin >> id;
-                manager.deleteParticipant(id);
+                manager->deleteParticipant(id);
                 break;
             case 3:
                 std::cout << "Enter ID to update, new Name (use_for_spaces), new Score: ";
                 std::cin >> id >> name >> score;
-                manager.updateParticipant(id, name, score);
+                manager->updateParticipant(id, name, score);
                 break;
             case 4: {
                 int findChoice;
@@ -56,21 +62,21 @@ int main() {
                 if (findChoice == 1) {
                     std::cout << "Enter ID to find: ";
                     std::cin >> id;
-                    manager.findParticipantById(id);
+                    manager->findParticipantById(id);
                 } else if (findChoice == 2) {
                     std::cout << "Enter Name to find (use_for_spaces): ";
                     std::cin >> name;
-                    manager.findParticipantByName(name);
+                    manager->findParticipantByName(name);
                 } else {
                     std::cout << "Invalid choice." << std::endl;
                 }
                 break;
             }
             case 5:
-                manager.listAllParticipants();
+                manager->listAllParticipants();
                 break;
             case 6:
-                manager.clear();
+                manager->clear();
                 std::cout << "All participants cleared." << std::endl;
                 break;
             case 0:
@@ -80,6 +86,8 @@ int main() {
                 std::cout << "Invalid choice. Please try again." << std::endl;
         }
     } while (choice != 0);
+
+    delete manager;
 
     return 0;
 }

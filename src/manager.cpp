@@ -83,3 +83,11 @@ std::vector<Participant*>::iterator ScoreManager::findById(int id) {
     return std::find_if(participants.begin(), participants.end(), 
                         [id](const Participant* p) { return p->id == id; });
 }
+
+void ScoreManager::clear() {
+    // Delete all dynamically allocated Participant objects
+    for (auto* participant : participants) {
+        delete participant;
+    }
+    participants.clear();
+}

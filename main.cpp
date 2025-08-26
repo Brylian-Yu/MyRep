@@ -9,6 +9,7 @@ void printMenu() {
     std::cout << "3. Update Participant" << std::endl;
     std::cout << "4. Find Participant" << std::endl;
     std::cout << "5. List All Participants" << std::endl;
+    std::cout << "6. Clear All Participants" << std::endl;
     std::cout << "0. Exit" << std::endl;
     std::cout << "Enter your choice: ";
 }
@@ -67,6 +68,10 @@ int main() {
             }
             case 5:
                 manager.listAllParticipants();
+                break;
+            case 6:
+                manager.clear();
+                std::cout << "All participants cleared." << std::endl;
                 break;
             case 0:
                 std::cout << "Exiting..." << std::endl;

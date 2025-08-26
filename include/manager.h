@@ -23,6 +23,7 @@ public:
     void findParticipantById(int id) const;
     void findParticipantByName(const std::string& name) const;
     void listAllParticipants() const;
+    void clear();
 
 private:
     std::vector<Participant*> participants;

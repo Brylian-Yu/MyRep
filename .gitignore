@@ -6,5 +6,5 @@ build/
 app
 
 # Review artifacts
-review.diff
-code_review_report.csv
+*.diff
+*.csv

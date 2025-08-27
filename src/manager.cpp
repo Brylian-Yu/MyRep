@@ -1,6 +1,11 @@
-#include "../include/manager.h"
+#include "include/manager.h"
 #include <iostream>
 #include <algorithm>
+
+ScoreManager& ScoreManager::getInstance() {
+    static ScoreManager instance;
+    return instance;
+}
 
 // Destructor implementation
 ScoreManager::~ScoreManager() {
@@ -11,80 +16,74 @@ ScoreManager::~ScoreManager() {
     participants.clear();
 }
 
-void ScoreManager::addParticipant(int id, const std::string& name, double score) {
+bool ScoreManager::addParticipant(int id, const std::string& name, double score) {
+    std::lock_guard<std::mutex> lock(mtx_);
     if (findById(id) != participants.end()) {
-        std::cout << "Error: Participant with ID " << id << " already exists." << std::endl;
-        return;
+        return false;
     }
     participants.push_back(new Participant{id, name, score});
-    std::cout << "Participant added successfully." << std::endl;
+    return true;
 }
 
 bool ScoreManager::deleteParticipant(int id) {
+    std::lock_guard<std::mutex> lock(mtx_);
     auto it = findById(id);
     if (it != participants.end()) {
         delete *it;
         participants.erase(it);
-        std::cout << "Participant with ID " << id << " deleted." << std::endl;
         return true;
     }
-    std::cout << "Error: Participant with ID " << id << " not found." << std::endl;
     return false;
 }
 
 bool ScoreManager::updateParticipant(int id, const std::string& newName, double newScore) {
+    std::lock_guard<std::mutex> lock(mtx_);
     auto it = findById(id);
     if (it != participants.end()) {
         (*it)->name = newName;
         (*it)->score = newScore;
-        std::cout << "Participant with ID " << id << " updated." << std::endl;
         return true;
     }
-    std::cout << "Error: Participant with ID " << id << " not found." << std::endl;
     return false;
 }
 
-void ScoreManager::findParticipantById(int id) const {
+Participant* ScoreManager::findParticipantById(int id) const {
+    std::lock_guard<std::mutex> lock(mtx_);
     auto it = std::find_if(participants.begin(), participants.end(), 
-                         [id](const Participant* p) { return p->id == id; });
+                         [id](Participant* p) { return p->id == id; });
 
     if (it != participants.end()) {
-        std::cout << "Participant Found: ID: " << (*it)->id << ", Name: " << (*it)->name << ", Score: " << (*it)->score << std::endl;
+        return *it;
     } else {
-        std::cout << "Participant with ID " << id << " not found." << std::endl;
+        return nullptr;
     }
 }
 
-void ScoreManager::findParticipantByName(const std::string& name) const{
+Participant* ScoreManager::findParticipantByName(const std::string& name) const{
+    std::lock_guard<std::mutex> lock(mtx_);
     auto it = std::find_if(participants.begin(), participants.end(), 
-                         [name](const Participant* p) { return p->name == name; });
+                         [name](Participant* p) { return p->name == name; });
 
     if (it != participants.end()) {
-        std::cout << "Participant Found: ID: " << (*it)->id << ", Name: " << (*it)->name << ", Score: " << (*it)->score << std::endl;
+        return *it;
     } else {
-        std::cout << "Participant with Name " << name << " not found." << std::endl;
+        return nullptr;
     }
 }
 
-void ScoreManager::listAllParticipants() const {
-    if (participants.empty()) {
-        std::cout << "No participants in the system." << std::endl;
-        return;
-    }
-    std::cout << "--- All Participants ---" << std::endl;
-    for (const auto& p : participants) {
-        std::cout << "ID: " << p->id << ",\tName: " << p->name << ",\tScore: " << p->score << std::endl;
-    }
-    std::cout << "------------------------" << std::endl;
+const ParticipantList& ScoreManager::listAllParticipants() const {
+    std::lock_guard<std::mutex> lock(mtx_);
+    return participants;
 }
 
 // Private helper function
-std::vector<Participant*>::iterator ScoreManager::findById(int id) {
+ParticipantList::iterator ScoreManager::findById(int id) {
     return std::find_if(participants.begin(), participants.end(), 
-                        [id](const Participant* p) { return p->id == id; });
+                        [id](Participant* p) { return p->id == id; });
 }
 
 void ScoreManager::clear() {
+    std::lock_guard<std::mutex> lock(mtx_);
     // Delete all dynamically allocated Participant objects
     for (auto* participant : participants) {
         delete participant;

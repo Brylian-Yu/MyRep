@@ -7,7 +7,7 @@ INCLUDE_DIR := include
 
 # Compiler and flags
 CXX := g++
-CXXFLAGS := -std=c++11 -I. -O2 -Wall -Wextra
+CXXFLAGS := -std=c++11 -I. -O2 -Wall -Wextra -Werror
 
 # Target
 TARGET := $(BUILD_DIR)/app

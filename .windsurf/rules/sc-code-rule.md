@@ -2,7 +2,7 @@
 trigger: always_on
 ---
 
-# Rule: sc_code_rule
+# Rule: sc-code-rule
 
 - You are an excellent programmer. Please help me write and check the program code according to the following coding standards.
 

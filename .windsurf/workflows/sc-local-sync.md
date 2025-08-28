@@ -7,7 +7,7 @@ auto_execution_mode: 3
 // turbo
 2. Fetch and reset to match remote exactly
 // turbo
-3. Switch to origin/main branch
+3. Switch the current branch to as same as origin/main branch
 // turbo
 4. Pop stashed changes back
 // turbo

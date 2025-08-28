@@ -3,7 +3,7 @@ description: Check diff info of local reposity space
 auto_execution_mode: 3
 ---
 
-1. run 'git diff HEAD > review.diff' to generate the diff file
+1. run 'git status --porcelain > review.diff' to generate the diff file
 
 2. check the review.diff file to find the files new/deleted/modified
 

@@ -7,6 +7,8 @@ auto_execution_mode: 3
 // turbo
 2. Fetch and reset to match remote exactly
 // turbo
-3. Pop stashed changes back
+3. Switch to origin/main branch
 // turbo
-4. Verify sync completion
+4. Pop stashed changes back
+// turbo
+5. Verify sync completion

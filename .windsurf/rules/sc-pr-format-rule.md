@@ -21,7 +21,7 @@ trigger: always_on
 - Include the timestamp when changes were made
 
 ### 3. Modifier
-- **Modifier**: Read from memory `memory-coder-name`
+- **Modifier**: Read from `git config user.name`
 
 ### 4. Modified Files List
 **Format**: `filename, PASS or FAILED, lines added/deleted/modified, modification description`

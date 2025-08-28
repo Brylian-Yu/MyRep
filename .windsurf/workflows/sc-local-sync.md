@@ -3,14 +3,21 @@ description: Sync local repository with remote changes
 auto_execution_mode: 3
 ---
 
-1. Check current branch status and show which branch you're on
+1. Check current branch and working directory status
+// turbo
+2. Stash any uncommitted changes to preserve local work
 
-2. Fetch latest changes from remote repository
+3. Fetch latest changes from remote repository
+// turbo
+4. Check branch relationship with remote (ahead/behind/diverged)
 
-3. Check if local branch is behind remote
+5. Handle sync based on status:
+   - If behind: pull changes
+   - If diverged: reset hard to origin/main (WARNING: loses local commits)
+   - If ahead: push local changes or reset if unwanted
 
-4. Pull latest changes from remote to local branch
+6. Pop stashed changes back if any were stashed
 
-5. Show final status to confirm sync is complete
-
-6. List any remaining untracked or modified files that need attention
+7. Show final sync status and verify clean state
+// turbo
+8. List any remaining untracked or modified files that need attention

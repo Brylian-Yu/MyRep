@@ -14,6 +14,10 @@
  * any license under its patent rights, nor the rights of others.
  */
 
+ #include "tmp/tmp.h"
+ #include <stdlib.h>
+ #include <string.h>
+ #include <stdio.h>
 
 /*
  * @brief The main entry point for the application.
@@ -21,6 +25,29 @@
  */
 int main()
 {
+
+    char* buf = nullptr;
+    int ret = 0;
+    
+    ret = TMPAlloc(&buf, 1024);
+    if (ret != 0)
+    {
+        printf("TMPAlloc failed\n");
+        return -1;
+    }
+
+    memset(buf, 0, 1024);
+
+    snprintf(buf, 1024, "Hello World\n");
+
+    printf("%s", buf);
+
+    if(buf)
+    {
+        free(buf);
+        buf = nullptr;
+    }
+    
 
     return 0;
 }

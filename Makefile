@@ -12,30 +12,33 @@ CXXFLAGS := -std=c++11 -I. -O2 -Wall -Wextra -Werror
 # Target
 TARGET := $(BUILD_DIR)/app
 
-# Sources and objects
-SRCS := main.cpp $(wildcard $(SRC_DIR)/*.cpp)
-OBJS := $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(notdir $(SRCS)))
+# Find all source files
+SRCS := $(wildcard *.cpp) $(shell find $(SRC_DIR) -name '*.cpp')
 
-INCLUDES := -I$(INCLUDE_DIR)
+# Generate object file paths by replacing src/ with build/ and keeping subdirectories
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(filter $(SRC_DIR)/%,$(SRCS)))
+OBJS += $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(filter-out $(SRC_DIR)/%,$(SRCS)))
+
+# Add include paths
+CXXFLAGS += -I$(INCLUDE_DIR)
 
 .PHONY: all clean run
 
 all: $(TARGET)
 
-# Create build directory
-$(BUILD_DIR):
-	@mkdir -p $(BUILD_DIR)
-
 # Link the executable
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Compilation rules
-$(BUILD_DIR)/main.o: main.cpp | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+# Generic rule to compile source files into object files
+# This handles both root .cpp files and files in src/
+$(BUILD_DIR)/%.o: %.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Run the application
 run: all

@@ -15,12 +15,33 @@
  */
 
 
+#include "tmp/tmp.h"
+#include <stdio.h>
+#include <string.h>
+
 /*
  * @brief The main entry point for the application.
  * @return 0 on successful execution.
  */
 int main()
 {
+
+    char* buffer = nullptr;
+    int ret = 0;
+
+    ret = TMPAlloc(&buffer, 1024);
+
+    if (ret != 0)
+    {
+        printf("TMPAlloc failed\n");
+        return -1;
+    }
+
+    memset(buffer, 0, 1024);
+
+    snprintf(buffer, 1024, "Hello World\n");
+
+    printf("%s", buffer);
 
     return 0;
 }

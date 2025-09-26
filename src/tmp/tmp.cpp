@@ -5,7 +5,7 @@
 int TMPAlloc(char** buf, int size)
 {
     char* tmpbuf = nullptr;
-    tmpbuf = malloc(sizeof(char)*size); 
+    tmpbuf = (char*)malloc(sizeof(char)*size); 
     
     if (tmpbuf == nullptr)
     {

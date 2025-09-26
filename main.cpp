@@ -14,7 +14,6 @@
  * any license under its patent rights, nor the rights of others.
  */
 
-#include "include/score_proc.h"
 
 /*
  * @brief The main entry point for the application.
@@ -22,8 +21,6 @@
  */
 int main()
 {
-    ScoreProc scoreProc;
-    scoreProc.run();
 
     return 0;
 }

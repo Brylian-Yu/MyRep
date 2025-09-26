@@ -13,8 +13,8 @@ CXXFLAGS := -std=c++11 -I. -O2 -Wall -Wextra -Werror
 TARGET := $(BUILD_DIR)/app
 
 # Sources and objects
-SRCS := main.cpp $(wildcard $(SRC_DIR)/*.cpp)
-OBJS := $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(notdir $(SRCS)))
+SRCS := main.cpp $(shell find $(SRC_DIR) -name '*.cpp')
+OBJS := $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 
 INCLUDES := -I$(INCLUDE_DIR)
 
@@ -22,7 +22,7 @@ INCLUDES := -I$(INCLUDE_DIR)
 
 all: $(TARGET)
 
-# Create build directory
+# Create build directory structure
 $(BUILD_DIR):
 	@mkdir -p $(BUILD_DIR)
 
@@ -31,10 +31,8 @@ $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $^ -o $@
 
 # Compilation rules
-$(BUILD_DIR)/main.o: main.cpp | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
-
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
+	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 # Run the application
